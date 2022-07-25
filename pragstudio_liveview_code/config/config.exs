@@ -13,7 +13,11 @@ config :pragstudio_liveview_code,
 # Configures the endpoint
 config :pragstudio_liveview_code, PragstudioLiveviewCodeWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: PragstudioLiveviewCodeWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [
+    view: PragstudioLiveviewCodeWeb.ErrorView,
+    accepts: ~w(html json),
+    layout: false
+  ],
   pubsub_server: PragstudioLiveviewCode.PubSub,
   live_view: [signing_salt: "pDHHhD2q"]
 
@@ -46,6 +50,17 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :tailwind,
+  version: "3.1.6",
+  default: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
