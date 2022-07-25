@@ -49,7 +49,8 @@ defmodule PragstudioLiveviewCode.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:tailwind, "~> 0.1.6", runtime: Mix.env() == :dev}
+      {:tailwind, "~> 0.1.6", runtime: Mix.env() == :dev},
+      {:dart_sass, "~> 0.5", runtime: Mix.env() == :dev}
     ]
   end
 
@@ -67,6 +68,7 @@ defmodule PragstudioLiveviewCode.MixProject do
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.deploy": [
         "esbuild default --minify",
+        "sass default",
         "tailwind default --minify",
         "phx.digest"
       ]
