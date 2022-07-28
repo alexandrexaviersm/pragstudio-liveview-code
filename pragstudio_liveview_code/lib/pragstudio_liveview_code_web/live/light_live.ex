@@ -41,6 +41,18 @@ defmodule PragstudioLiveviewCodeWeb.LightLive do
         <span class="sr-only">Light Me Up!</span>
       </button>
     </div>
+
+    <div id="license">
+      <h1>Slider</h1>
+      <form phx-change="update">
+        <input type="range" min="0" max="100"
+              name="brightness" value={@brightness} />
+      </form>
+
+      <div class="amount">
+        <%= @brightness %>
+      </div>
+    </div>
     """
   end
 
@@ -66,6 +78,12 @@ defmodule PragstudioLiveviewCodeWeb.LightLive do
 
   def handle_event("rando", _, socket) do
     socket = assign(socket, :brightness, Enum.random(0..100))
+    {:noreply, socket}
+  end
+
+  def handle_event("update", %{"brightness" => brightness}, socket) do
+    brightness = String.to_integer(brightness)
+    socket = assign(socket, :brightness, brightness)
     {:noreply, socket}
   end
 end
