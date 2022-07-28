@@ -19,7 +19,7 @@ defmodule PragstudioLiveviewCodeWeb.Router do
 
     get "/", PageController, :index
     live "/light", LightLive
-    live "license", LicenseLive
+    live "/license", LicenseLive
   end
 
   # Other scopes may use custom stacks.

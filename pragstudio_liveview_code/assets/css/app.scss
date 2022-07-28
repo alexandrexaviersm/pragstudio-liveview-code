@@ -187,3 +187,33 @@ h1 {
     transition: width 2s ease;
   }
 }
+
+/* License */
+
+#license {
+  @apply max-w-lg mx-auto text-center;
+
+  .card {
+    @apply bg-white shadow rounded-lg shadow-lg;
+
+    .content {
+      @apply p-6;
+    }
+  }
+
+  .seats {
+    @apply inline-flex items-center mb-8;
+
+    img {
+      @apply w-10 pr-2;
+    }
+
+    span {
+      @apply text-xl font-semibold text-cool-gray-700;
+    }
+  }
+
+  .amount {
+    @apply text-4xl leading-none font-extrabold text-cool-gray-900 mt-4;
+  }
+}
