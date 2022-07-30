@@ -1,4 +1,4 @@
-defmodule LiveViewStudio.Sales do
+defmodule PragstudioLiveviewCode.Sales do
   def new_orders do
     Enum.random(5..20)
   end

@@ -1,7 +1,7 @@
 defmodule PragstudioLiveviewCodeWeb.SalesDashboardLive do
   use PragstudioLiveviewCodeWeb, :live_view
 
-  alias LiveViewStudio.Sales
+  alias PragstudioLiveviewCode.Sales
 
   def mount(_params, _session, socket) do
     if connected?(socket) do
