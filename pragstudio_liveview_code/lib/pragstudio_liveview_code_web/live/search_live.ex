@@ -98,6 +98,7 @@ defmodule PragstudioLiveviewCodeWeb.SearchLive do
           socket
           |> clear_flash()
           |> assign(stores: stores, loading: false)
+
         {:noreply, socket}
     end
   end
