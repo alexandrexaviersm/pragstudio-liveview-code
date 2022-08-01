@@ -2,12 +2,15 @@ defmodule PragstudioLiveviewCodeWeb.FlightsLive do
   use PragstudioLiveviewCodeWeb, :live_view
 
   alias PragstudioLiveviewCode.Flights
+  alias PragstudioLiveviewCode.Airports
 
   def mount(_params, _session, socket) do
     socket =
       assign(socket,
-        flight: "",
+        number: "",
+        airport: "",
         flights: [],
+        matches: [],
         loading: false
       )
 
@@ -19,16 +22,30 @@ defmodule PragstudioLiveviewCodeWeb.FlightsLive do
     <h1>Find a Flight</h1>
     <div id="search">
 
-      <form phx-submit="flight-search">
-        <input type="text" name="flight" value={@flight}
-                placeholder="Flight number or airport"
-                autofocus autocomplete="off"
-                readonly={@loading} />
-
+      <form phx-submit="number-search">
+        <input type="text" name="number" value={@number}
+               placeholder="Flight Number"
+               autofocus autocomplete="off"
+               readonly={@loading} />
         <button type="submit">
           <img src="images/search.svg">
         </button>
       </form>
+
+      <form phx-change="suggest-airport" phx-submit="airport-search">
+        <input type="text" name="airport" value={@airport}
+                list="matches" placeholder="Airport"
+                readonly={@loading} />
+        <button type="submit">
+          <img src="images/search.svg">
+        </button>
+      </form>
+
+      <datalist id="matches">
+        <%= for match <- @matches do %>
+          <option value={match}><%= match %></option>
+        <% end %>
+      </datalist>
 
       <%= if @loading do %>
         <div class="loader">Loading...</div>
@@ -68,12 +85,13 @@ defmodule PragstudioLiveviewCodeWeb.FlightsLive do
     Timex.format!(time, "%b %d at %H:%M", :strftime)
   end
 
-  def handle_event("flight-search", %{"flight" => flight}, socket) do
-    send(self(), {:run_flight_search, flight})
+  def handle_event("number-search", %{"number" => number}, socket) do
+    send(self(), {:run_number_search, number})
 
     socket =
       assign(socket,
-        flight: flight,
+        number: number,
+        airport: "",
         flights: [],
         loading: true
       )
@@ -81,20 +99,62 @@ defmodule PragstudioLiveviewCodeWeb.FlightsLive do
     {:noreply, socket}
   end
 
-  def handle_info({:run_flight_search, flight}, socket) do
-    socket =
-      case Flights.search_by_number(flight) do
-        [] ->
-          socket
-          |> put_flash(:info, "No flights matching \"#{flight}\"")
-          |> assign(stores: [], loading: false)
+  def handle_event("suggest-airport", %{"airport" => prefix}, socket) do
+    socket = assign(socket, matches: Airports.suggest(prefix))
+    {:noreply, socket}
+  end
 
-        flights ->
+  def handle_event("airport-search", %{"airport" => airport}, socket) do
+    send(self(), {:run_airport_search, airport})
+
+    socket =
+      assign(socket,
+        number: "",
+        airport: airport,
+        flights: [],
+        loading: true
+      )
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:run_number_search, number}, socket) do
+    case Flights.search_by_number(number) do
+      [] ->
+        socket =
+          socket
+          |> put_flash(:info, "No flights matching \"#{number}\"")
+          |> assign(flights: [], loading: false)
+
+        {:noreply, socket}
+
+      flights ->
+        socket =
           socket
           |> clear_flash()
           |> assign(flights: flights, loading: false)
-      end
 
-    {:noreply, socket}
+        {:noreply, socket}
+    end
+  end
+
+  def handle_info({:run_airport_search, airport}, socket) do
+    case Flights.search_by_airport(airport) do
+      [] ->
+        socket =
+          socket
+          |> put_flash(:info, "No flights matching \"#{airport}\"")
+          |> assign(flights: [], loading: false)
+
+        {:noreply, socket}
+
+      flights ->
+        socket =
+          socket
+          |> clear_flash()
+          |> assign(flights: flights, loading: false)
+
+        {:noreply, socket}
+    end
   end
 end
