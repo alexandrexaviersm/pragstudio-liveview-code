@@ -81,7 +81,7 @@ defmodule PragstudioLiveviewCodeWeb.FlightsLive do
     {:noreply, socket}
   end
 
-  def handle_info({:run_flight_search, flight},  socket) do
+  def handle_info({:run_flight_search, flight}, socket) do
     socket =
       case Flights.search_by_number(flight) do
         [] ->
@@ -92,7 +92,7 @@ defmodule PragstudioLiveviewCodeWeb.FlightsLive do
         flights ->
           socket
           |> clear_flash()
-          |> assign(flights: flights, loading: false )
+          |> assign(flights: flights, loading: false)
       end
 
     {:noreply, socket}
