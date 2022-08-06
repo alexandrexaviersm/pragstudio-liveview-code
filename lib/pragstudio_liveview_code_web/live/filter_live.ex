@@ -11,7 +11,7 @@ defmodule PragstudioLiveviewCodeWeb.FilterLive do
         prices: []
       )
 
-    {:ok, socket}
+    {:ok, socket, temporary_assigns: [boats: []]}
   end
 
   def render(assigns) do
@@ -27,10 +27,7 @@ defmodule PragstudioLiveviewCodeWeb.FilterLive do
         <div class="prices">
           <input type="hidden" name="prices[]" value="" />
           <%= for price <- ["$", "$$", "$$$"] do %>
-            <input type="checkbox" id={price}
-                  name="prices[]" value={price}
-                  checked={price in @prices} />
-            <label for={price}><%= price %></label>
+            <%= price_checkbox(price: price, checked: price in @prices) %>
           <% end %>
         </div>
       </div>
@@ -66,6 +63,17 @@ defmodule PragstudioLiveviewCodeWeb.FilterLive do
     socket = assign(socket, params ++ [boats: boats])
 
     {:noreply, socket}
+  end
+
+  defp price_checkbox(assigns) do
+    assigns = Enum.into(assigns, %{})
+
+    ~H"""
+    <input type="checkbox" id={@price}
+      name="prices[]" value={@price}
+      checked={@checked} />
+    <label for={@price}><%= @price %></label>
+    """
   end
 
   defp type_options do
