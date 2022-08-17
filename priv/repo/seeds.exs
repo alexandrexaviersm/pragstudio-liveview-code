@@ -12,6 +12,7 @@
 
 alias PragstudioLiveviewCode.Repo
 alias PragstudioLiveviewCode.Boats.Boat
+alias PragstudioLiveviewCode.Flights.Flight
 alias PragstudioLiveviewCode.Stores.Store
 
 %Boat{
@@ -245,5 +246,97 @@ alias PragstudioLiveviewCode.Stores.Store
   zip: "15133348",
   open: true,
   hours: "3am - 11pm M-F"
+}
+|> Repo.insert!()
+
+#### Flights
+
+%Flight{
+  number: "450",
+  origin: "DEN",
+  destination: "ORD",
+  departure_time: Timex.shift(Timex.now(), days: 1) |> DateTime.truncate(:second),
+  arrival_time: Timex.shift(Timex.now(), days: 1, hours: 2) |> DateTime.truncate(:second)
+}
+|> Repo.insert!()
+
+%Flight{
+  number: "450",
+  origin: "DEN",
+  destination: "ORD",
+  departure_time: Timex.shift(Timex.now(), days: 2) |> DateTime.truncate(:second),
+  arrival_time: Timex.shift(Timex.now(), days: 2, hours: 2) |> DateTime.truncate(:second)
+}
+|> Repo.insert!()
+
+%Flight{
+  number: "450",
+  origin: "DEN",
+  destination: "ORD",
+  departure_time: Timex.shift(Timex.now(), days: 3) |> DateTime.truncate(:second),
+  arrival_time: Timex.shift(Timex.now(), days: 3, hours: 2) |> DateTime.truncate(:second)
+}
+|> Repo.insert!()
+
+%Flight{
+  number: "860",
+  origin: "DFW",
+  destination: "ORD",
+  departure_time: Timex.shift(Timex.now(), days: 1) |> DateTime.truncate(:second),
+  arrival_time: Timex.shift(Timex.now(), days: 1, hours: 3) |> DateTime.truncate(:second)
+}
+|> Repo.insert!()
+
+%Flight{
+  number: "860",
+  origin: "DFW",
+  destination: "ORD",
+  departure_time: Timex.shift(Timex.now(), days: 2) |> DateTime.truncate(:second),
+  arrival_time: Timex.shift(Timex.now(), days: 2, hours: 3) |> DateTime.truncate(:second)
+}
+|> Repo.insert!()
+
+%Flight{
+  number: "860",
+  origin: "DFW",
+  destination: "ORD",
+  departure_time: Timex.shift(Timex.now(), days: 3) |> DateTime.truncate(:second),
+  arrival_time: Timex.shift(Timex.now(), days: 3, hours: 3) |> DateTime.truncate(:second)
+}
+|> Repo.insert!()
+
+%Flight{
+  number: "740",
+  origin: "DAB",
+  destination: "DEN",
+  departure_time: Timex.shift(Timex.now(), days: 1) |> DateTime.truncate(:second),
+  arrival_time: Timex.shift(Timex.now(), days: 1, hours: 4) |> DateTime.truncate(:second)
+}
+|> Repo.insert!()
+
+%Flight{
+  number: "740",
+  origin: "DAB",
+  destination: "DEN",
+  departure_time: Timex.shift(Timex.now(), days: 2) |> DateTime.truncate(:second),
+  arrival_time: Timex.shift(Timex.now(), days: 2, hours: 4) |> DateTime.truncate(:second)
+}
+|> Repo.insert!()
+
+%Flight{
+  number: "740",
+  origin: "DAB",
+  destination: "DEN",
+  departure_time: Timex.shift(Timex.now(), days: 3) |> DateTime.truncate(:second),
+  arrival_time: Timex.shift(Timex.now(), days: 3, hours: 4) |> DateTime.truncate(:second)
+}
+|> Repo.insert!()
+
+%Flight{
+  number: "123",
+  origin: "EUA",
+  destination: "BRA",
+  departure_time: Timex.shift(Timex.now(), days: 3) |> DateTime.truncate(:second),
+  arrival_time: Timex.shift(Timex.now(), days: 3, hours: 4) |> DateTime.truncate(:second)
 }
 |> Repo.insert!()
