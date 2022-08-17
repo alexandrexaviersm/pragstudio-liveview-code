@@ -14,7 +14,7 @@ defmodule PragstudioLiveviewCodeWeb.FlightsLive do
         loading: false
       )
 
-    {:ok, socket}
+    {:ok, socket, temporary_assigns: [flights: []]}
   end
 
   def render(assigns) do

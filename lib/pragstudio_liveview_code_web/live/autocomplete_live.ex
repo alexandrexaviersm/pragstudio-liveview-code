@@ -14,7 +14,7 @@ defmodule PragstudioLiveviewCodeWeb.AutocompleteLive do
         loading: false
       )
 
-    {:ok, socket}
+    {:ok, socket, temporary_assigns: [stores: []]}
   end
 
   def render(assigns) do
